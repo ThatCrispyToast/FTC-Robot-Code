@@ -24,18 +24,19 @@ public class Park extends LinearOpMode {
     static final int TICKS_PER_WHEEL_ROTATION = (int) (MOTOR_TICK_COUNT / GEAR_RATIO);
     // static final double AVG_MARGIN_OF_ERROR = null;
 
-    public void moveForward(double inches, double speed) {
+    public String moveForward(double inches, double speed) {
         topLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         topRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         bottomLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         bottomRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        // UNFINISHED: int TargetPosition = TICKS_PER_WHEEL_ROTATION / CIRCUMFERENCE
+        double RawTarget = (1 / CIRCUMFERENCE * TICKS_PER_WHEEL_ROTATION) * inches;
+        int TargetPosition = (int) ((1 / CIRCUMFERENCE * TICKS_PER_WHEEL_ROTATION) * inches);
 
-        topLeftDrive.setTargetPosition(6496);
-        topRightDrive.setTargetPosition(6496);
-        bottomLeftDrive.setTargetPosition(6496);
-        bottomRightDrive.setTargetPosition(6496);
+        topLeftDrive.setTargetPosition(TargetPosition);
+        topRightDrive.setTargetPosition(TargetPosition);
+        bottomLeftDrive.setTargetPosition(TargetPosition);
+        bottomRightDrive.setTargetPosition(TargetPosition);
 
         topLeftDrive.setPower(speed);
         topRightDrive.setPower(speed);
@@ -46,6 +47,7 @@ public class Park extends LinearOpMode {
         topRightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         bottomLeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         bottomRightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        return String.valueOf(TargetPosition) + " / " + String.valueOf(RawTarget);
     }
 
     @Override
@@ -71,11 +73,14 @@ public class Park extends LinearOpMode {
         // runtime.reset();
 
         // Run
-        // cant control distance just yet
-        moveForward(12, 1.0);
+        // INCHES VALUE DOESNT WORK YET
+        String Moving = moveForward(12, 1.0);
 
         while (topLeftDrive.isBusy() || topRightDrive.isBusy() || bottomLeftDrive.isBusy() || bottomRightDrive.isBusy()) {
-            // Nothing
+            // What the Robot Does While Its Running
+            telemetry.addData("Status", "Moving... ");
+            telemetry.addData("Moving To", "Target Position / Raw Target | " + Moving);
+            telemetry.update();
         }
 
         topLeftDrive.setPower(0);
