@@ -73,8 +73,7 @@ public class Park extends LinearOpMode {
         // runtime.reset();
 
         // Run
-        // INCHES VALUE DOESNT WORK YET
-        String Moving = moveForward(12, 1.0);
+        String Moving = moveForward(70.75, 1.0);
 
         while (topLeftDrive.isBusy() || topRightDrive.isBusy() || bottomLeftDrive.isBusy() || bottomRightDrive.isBusy()) {
             // What the Robot Does While Its Running
