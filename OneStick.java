@@ -1,8 +1,3 @@
-/*
-I am in pain.
-This took unnecessarily long to do.
- */
-
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -33,8 +28,8 @@ public class OneStick extends OpMode
         bottomRightDrive = hardwareMap.get(DcMotor.class, "back_right_motor");
 
         // Reverse the motors that face towards the back of the robot
-        topLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        bottomLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+        topLeftDrive.setDirection(DcMotor.Direction.FORWARD);
+        bottomLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         topRightDrive.setDirection(DcMotor.Direction.FORWARD);
         bottomRightDrive.setDirection(DcMotor.Direction.FORWARD);
 
