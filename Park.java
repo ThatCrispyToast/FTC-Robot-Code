@@ -30,7 +30,7 @@ public class Park extends LinearOpMode {
         bottomLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         bottomRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        int TargetPosition = TICKS_PER_WHEEL_ROTATION / CIRCUMFERENCE
+        // UNFINISHED: int TargetPosition = TICKS_PER_WHEEL_ROTATION / CIRCUMFERENCE
 
         topLeftDrive.setTargetPosition(6496);
         topRightDrive.setTargetPosition(6496);
@@ -71,6 +71,7 @@ public class Park extends LinearOpMode {
         // runtime.reset();
 
         // Run
+        // cant control distance just yet
         moveForward(12, 1.0);
 
         while (topLeftDrive.isBusy() || topRightDrive.isBusy() || bottomLeftDrive.isBusy() || bottomRightDrive.isBusy()) {
