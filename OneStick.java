@@ -1,9 +1,15 @@
+/*
+I am in pain.
+This took unnecessarily long to do.
+ */
+
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
 
 @TeleOp(name="OneStick", group="BaseOpModes")
 public class OneStick extends OpMode
@@ -14,6 +20,7 @@ public class OneStick extends OpMode
     private DcMotor topRightDrive = null;
     private DcMotor bottomLeftDrive = null;
     private DcMotor bottomRightDrive = null;
+    // static final double HDHEX_ULTRAPLANETARY_TICK_COUNT = 28 / 2.89;
 
     // Code to run ONCE when the driver hits INIT
     @Override
@@ -36,11 +43,10 @@ public class OneStick extends OpMode
         telemetry.update();
     }
 
-    /* Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
+    // Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
     @Override
     public void init_loop() {
     }
-     */
 
     // Code to run ONCE when the driver hits PLAY
     @Override
@@ -64,7 +70,6 @@ public class OneStick extends OpMode
         bottomLeftPower = -gamepad1.left_stick_y + -gamepad1.left_stick_x + -gamepad1.left_trigger + gamepad1.right_trigger;
         topRightPower = -gamepad1.left_stick_y + -gamepad1.left_stick_x + gamepad1.left_trigger + -gamepad1.right_trigger;
 
-        // FUCKIN GROSS CODE INCOMING
         // Caps Powers at 1.0 or -1.0 (Theres gotta be a better way to do this cause looking at this block of single-line if statements makes me want to vomit)
         if (topLeftPower > 1.0) topLeftPower = 1.0;
         if (topLeftPower < -1.0) topLeftPower = -1.0;
