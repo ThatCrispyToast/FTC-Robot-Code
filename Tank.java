@@ -33,10 +33,10 @@ public class Tank extends OpMode
         bottomRightDrive = hardwareMap.get(DcMotor.class, "back_right_motor");
 
         // Reverse the motors that face towards the back of the robot
-        topLeftDrive.setDirection(DcMotor.Direction.FORWARD);
-        bottomLeftDrive.setDirection(DcMotor.Direction.FORWARD);
-        topRightDrive.setDirection(DcMotor.Direction.REVERSE);
-        bottomRightDrive.setDirection(DcMotor.Direction.REVERSE);
+        topLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+        bottomLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+        topRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        bottomRightDrive.setDirection(DcMotor.Direction.FORWARD);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -64,8 +64,20 @@ public class Tank extends OpMode
         double bottomRightPower;
 
         // Tank Mode
-        bottomLeftPower = topLeftPower  = -gamepad1.left_stick_y;
-        bottomRightPower = topRightPower = -gamepad1.right_stick_y;
+        bottomLeftPower = -gamepad1.left_stick_y + gamepad1.right_trigger;
+        topLeftPower  = -gamepad1.left_stick_y + gamepad1.left_trigger;
+        bottomRightPower = -gamepad1.right_stick_y + gamepad1.left_trigger;
+        topRightPower = -gamepad1.right_stick_y + gamepad1.right_trigger;
+
+        // Caps Powers at 1.0 or -1.0 (Theres gotta be a better way to do this cause looking at this block of single-line if statements makes me want to vomit)
+        if (topLeftPower > 1.0) topLeftPower = 1.0;
+        if (topLeftPower < -1.0) topLeftPower = -1.0;
+        if (bottomRightPower > 1.0) bottomRightPower = 1.0;
+        if (bottomRightPower < -1.0) bottomRightPower = -1.0;
+        if (bottomLeftPower > 1.0) bottomLeftPower = 1.0;
+        if (bottomLeftPower < -1.0) bottomLeftPower = -1.0;
+        if (topRightPower > 1.0) topRightPower = 1.0;
+        if (topRightPower < -1.0) topRightPower = -1.0;
 
         // Send calculated power to wheels
         topLeftDrive.setPower(topLeftPower);
