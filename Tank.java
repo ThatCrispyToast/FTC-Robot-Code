@@ -35,8 +35,8 @@ public class Tank extends OpMode
         // Reverse the motors that face towards the back of the robot
         topLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         bottomLeftDrive.setDirection(DcMotor.Direction.FORWARD);
-        topRightDrive.setDirection(DcMotor.Direction.FORWARD);
-        bottomRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        topRightDrive.setDirection(DcMotor.Direction.REVERSE);
+        bottomRightDrive.setDirection(DcMotor.Direction.REVERSE);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
