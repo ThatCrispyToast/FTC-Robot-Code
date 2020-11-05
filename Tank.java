@@ -1,8 +1,3 @@
-/*
-I am in pain.
-This took unnecessarily long to do.
- */
-
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -64,10 +59,16 @@ public class Tank extends OpMode
         double bottomRightPower;
 
         // Tank Mode
-        bottomLeftPower = -gamepad1.left_stick_y + gamepad1.right_trigger;
-        topLeftPower  = -gamepad1.left_stick_y + gamepad1.left_trigger;
-        bottomRightPower = -gamepad1.right_stick_y + gamepad1.left_trigger;
-        topRightPower = -gamepad1.right_stick_y + gamepad1.right_trigger;
+        bottomLeftPower = -gamepad1.left_stick_y;
+        topLeftPower  = -gamepad1.left_stick_y;
+        bottomRightPower = -gamepad1.right_stick_y;
+        topRightPower = -gamepad1.right_stick_y;
+
+        // Tank Mode w/ Strafing
+        //bottomLeftPower = -gamepad1.left_stick_y + gamepad1.right_trigger;
+        //topLeftPower  = -gamepad1.left_stick_y + gamepad1.left_trigger;
+        //bottomRightPower = -gamepad1.right_stick_y + gamepad1.left_trigger;
+        //topRightPower = -gamepad1.right_stick_y + gamepad1.right_trigger;
 
         // Caps Powers at 1.0 or -1.0 (Theres gotta be a better way to do this cause looking at this block of single-line if statements makes me want to vomit)
         if (topLeftPower > 1.0) topLeftPower = 1.0;
