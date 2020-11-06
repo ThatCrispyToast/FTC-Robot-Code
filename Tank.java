@@ -59,18 +59,18 @@ public class Tank extends OpMode
         double bottomRightPower;
 
         // Tank Mode
-        //bottomLeftPower = -gamepad1.left_stick_y;
-        //topLeftPower  = -gamepad1.left_stick_y;
-        //bottomRightPower = -gamepad1.right_stick_y;
-        //topRightPower = -gamepad1.right_stick_y;
+        // bottomLeftPower = -gamepad1.left_stick_y;
+        // topLeftPower  = -gamepad1.left_stick_y;
+        // bottomRightPower = -gamepad1.right_stick_y;
+        // topRightPower = -gamepad1.right_stick_y;
 
         // Tank Mode w/ Strafing
-        bottomLeftPower = -gamepad1.left_stick_y + gamepad1.right_trigger;
-        topLeftPower  = -gamepad1.left_stick_y + gamepad1.left_trigger;
-        bottomRightPower = -gamepad1.right_stick_y + gamepad1.left_trigger;
-        topRightPower = -gamepad1.right_stick_y + gamepad1.right_trigger;
+        bottomLeftPower = -gamepad1.left_stick_y + gamepad1.right_trigger + -gamepad1.left_trigger;
+        topLeftPower  = -gamepad1.left_stick_y + gamepad1.left_trigger + -gamepad1.right_trigger;
+        bottomRightPower = -gamepad1.right_stick_y + gamepad1.left_trigger + -gamepad1.right_trigger;
+        topRightPower = -gamepad1.right_stick_y + gamepad1.right_trigger + -gamepad1.left_trigger;
 
-        // Caps Powers at 1.0 or -1.0 (Theres gotta be a better way to do this cause looking at this block of single-line if statements makes me want to vomit)
+        // Caps Powers at 1.0 or -1.0 (There's gotta be a better way to do this cause looking at this block of single-line if statements makes me want to vomit)
         if (topLeftPower > 1.0) topLeftPower = 1.0;
         if (topLeftPower < -1.0) topLeftPower = -1.0;
         if (bottomRightPower > 1.0) bottomRightPower = 1.0;
