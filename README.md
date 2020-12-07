@@ -9,4 +9,4 @@ The Code for the Robot<br>
 - Lingering Sense of Existential Dread (Already Here)
 - Guides -i.e Troubleshooting Guide, Config Guide, ect.- (Coming Soon)
 
-> Sorry if the codes a bit of a mess, its just like my personality: somewhere between 'soft' and 'trying to drown children'
+> Sorry if the codes a bit of a mess, its just like my personality: somewhere between 'soft and organized' and 'trying to drown children' - Aniket
