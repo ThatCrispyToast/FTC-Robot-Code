@@ -10,4 +10,4 @@ The Code for the Robot<br>
 - Guides -i.e Troubleshooting Guide, Config Guide, ect.- (Coming Soon)
 
 > Sorry if the codes a bit of a mess rn, its just like my personality: somewhere between 'soft and organized' and 'trying to drown children' but im cleaning it up so it wont be messy for long -Aniket
-EDIT: i have come to the realization that i am slow and unreliable and it will probably take me a while to clean the code up completely ¯\_(ツ)_/¯
+EDIT: i have come to the realization that i am slow and unreliable and it will probably take me a while to clean the code up completely ¯\\\_(ツ)_/¯
