@@ -2,7 +2,7 @@
 
 <h1 align="center">Robot Code</h1>
 
-<b><p align="center">its the code for the robot</p></b>
+<b><p align="center">Its the code for the robot.</p></b>
 <p align="center"><sup><sub>whatd you expect</sub></sup></p>
 
 ### Repo Contains:
