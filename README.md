@@ -1,7 +1,7 @@
 ![Banner](readme-docs/banner.png)
 
 The Code for the Robot<br>
-<sub><sup>I dont know what you were expecting honestly.</sup></sub>
+<sub><sup>I dont know what you were expecting honestly</sup></sub>
 
 ### Repo Contains:
 - Robot Code
