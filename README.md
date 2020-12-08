@@ -1,7 +1,9 @@
-![Banner](readme-docs/banner.png)
+![Banner](readme-docs/bannerlogo.png)
 
-The Code for the Robot<br>
-<sub><sup>I dont know what you were expecting honestly</sup></sub>
+<p align="center">The Code for the Robot</p>
+<p align="center"><sub><sup>I dont know what you were expecting honestly</sup></sub></p>
+
+---
 
 ### Repo Contains:
 - Robot Code
