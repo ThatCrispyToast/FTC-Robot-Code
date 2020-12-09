@@ -10,7 +10,7 @@
 - Documentation on Said Robot Code (Coming Soon)
 - Guides -i.e Troubleshooting Guide, Config Guide, ect.- (Coming Soon)
 
-### TODO:
+### REPO TODO:
 - [x] Add Android Studio Code
 - [ ] Add Documentation
 - [ ] Create Guides

@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
@@ -11,8 +11,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class Tank extends OpMode
 {
     // Declare OpMode members.
-    float conveyorSpeed = 50.0;
-
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor topLeftDrive = null;
     private DcMotor topRightDrive = null;
@@ -21,16 +19,15 @@ public class Tank extends OpMode
     private DcMotor conveyor = null;
     private DcMotor leftIntake = null;
     private DcMotor rightIntake = null;
-    private DcMotor Shooter = null;
+    private DcMotor shooter = null;
     private Servo leftIntakeServo = null;
     private Servo rightIntakeServo = null;
-    // static final double HDHEX_ULTRAPLANETARY_TICK_COUNT = 28 / 2.89;
 
     // Code to run ONCE when the driver hits INIT
     @Override
     public void init() {
 
-        // Initialize the hardware variables.
+        // Initializing hardware variables.
         topLeftDrive  = hardwareMap.get(DcMotor.class, "front_left_motor");
         topRightDrive = hardwareMap.get(DcMotor.class, "front_right_motor");
         bottomLeftDrive  = hardwareMap.get(DcMotor.class, "back_left_motor");
@@ -38,11 +35,11 @@ public class Tank extends OpMode
         conveyor  = hardwareMap.get(DcMotor.class, "conveyor");
         leftIntake  = hardwareMap.get(DcMotor.class, "left_intake_rot");
         rightIntake  = hardwareMap.get(DcMotor.class, "right_intake_rot");
+        shooter = hardwareMap.get(DcMotor.class, "shooter");
         leftIntakeServo  = hardwareMap.get(Servo.class, "left_intake");
         rightIntakeServo  = hardwareMap.get(Servo.class, "right_intake");
-        Shooter = hardwareMap.get(DcMotor.class, "shooter");
 
-        // Reverse the motors that face towards the back of the robot
+        // Reversing Flipped Motors
         topLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         bottomLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         topRightDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -72,9 +69,6 @@ public class Tank extends OpMode
         double topRightPower;
         double bottomLeftPower;
         double bottomRightPower;
-        double conveyorPower;
-        double leftIntakePower;
-        double rightIntakePower;
         double shooterPower;
         
         // Gamepad 1 Controls
@@ -88,47 +82,38 @@ public class Tank extends OpMode
         // Gamepad 1 Controls
         // Conveyor
         if (gamepad1.y) {
-            conveyorPower = conveyorSpeed / 100;
+            conveyor.setPower(0.5);
+            shooterPower = -1.0;
         } else if (gamepad1.a) {
-            conveyorPower = -conveyorSpeed / 100;
+            conveyor.setPower(-0.5);
+            shooterPower = 1.0;
         } else {
-            conveyorPower = 0.0;
+            conveyor.setPower(0.0);
+            shooterPower = 0.0;
         }
         
         // Intake
         if (gamepad1.left_bumper) {
-            leftIntakePower = 1.0;
-            rightIntakePower = -1.0;
+            leftIntake.setPower(1.0);
+            rightIntake.setPower(-1.0);
         } else if (gamepad1.right_bumper) {
-            leftIntakePower = -1.0;
-            rightIntakePower = 1.0;
+            leftIntake.setPower(-1.0);
+            rightIntake.setPower(1.0);
         } else {
-            leftIntakePower = 0.0;
-            rightIntakePower = 0.0;
+            leftIntake.setPower(0.0);
+            rightIntake.setPower(0.0);
         }
         
         // Intake Servos
         if (gamepad1.dpad_up) {
             leftIntakeServo.setPosition(1.0);
             rightIntakeServo.setPosition(0.0);
-            
         } else if (gamepad1.dpad_down) {
             leftIntakeServo.setPosition(0.0);
             rightIntakeServo.setPosition(1.0);
         }
-        
-        // Gamepad 2 Controls
-        // Shooter
-        if (gamepad2.left_bumper) {
-            Shooter.setPower(-1.0);
-        } else if (gamepad2.right_bumper) {
-            Shooter.setPower(1.0);
-        } else {
-            Shooter.setPower(0);
-            
-        }
 
-        // Caps Powers at 1.0 or -1.0 (There's gotta be a better way to do this cause looking at this block of single-line if statements makes me want to vomit)
+        // Caps Powers at 1.0 or -1.0
         if (topLeftPower > 1.0) topLeftPower = 1.0;
         if (topLeftPower < -1.0) topLeftPower = -1.0;
         if (bottomRightPower > 1.0) bottomRightPower = 1.0;
@@ -138,20 +123,18 @@ public class Tank extends OpMode
         if (topRightPower > 1.0) topRightPower = 1.0;
         if (topRightPower < -1.0) topRightPower = -1.0;
 
-        // Send calculated power to wheels
+        // Send calculated power to motors
         topLeftDrive.setPower(topLeftPower);
         topRightDrive.setPower(topRightPower);
         bottomLeftDrive.setPower(bottomLeftPower);
         bottomRightDrive.setPower(bottomRightPower);
-        conveyor.setPower(conveyorPower);
-        leftIntake.setPower(leftIntakePower);
-        rightIntake.setPower(rightIntakePower);
+        shooter.setPower(shooterPower);
         
 
         // Show the elapsed game time, wheel powers, and control award shit that ill add later
         telemetry.addData("Status", "Running, Run Time: " + runtime.toString());
-        telemetry.addData("Motors", "top left (%.2f) top right (%.2f)\nbottom left (%.2f) bottom right (%.2f)", topLeftPower, topRightPower, bottomLeftPower, bottomRightPower);
-        telemetry.addData("Status", "Running...");
+        telemetry.addData("Motors", "Top Left: (%.2f) Top Right: (%.2f)", topLeftPower, topRightPower);
+        telemetry.addData("Motors", "Bottom Left: (%.2f) Bottom Right: (%.2f)", bottomLeftPower, bottomRightPower);
         telemetry.update();
     }
 

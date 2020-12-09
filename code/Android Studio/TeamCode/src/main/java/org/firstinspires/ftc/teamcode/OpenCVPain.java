@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -13,13 +14,13 @@ import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvPipeline;
+import org.openftc.easyopencv.OpenCvWebcam;
 
-@TeleOp
-public class EasyOpenCVExample extends LinearOpMode
+@TeleOp(name="OpenCVPain")
+public class OpenCVPain extends LinearOpMode
 {
-    OpenCvInternalCamera phoneCam;
+    OpenCvWebcam phoneCam;
     SkystoneDeterminationPipeline pipeline;
 
     @Override
@@ -27,7 +28,7 @@ public class EasyOpenCVExample extends LinearOpMode
     {
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        phoneCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         pipeline = new SkystoneDeterminationPipeline();
         phoneCam.setPipeline(pipeline);
 
@@ -59,8 +60,18 @@ public class EasyOpenCVExample extends LinearOpMode
         telemetry.addData("Position", pipeline.position);
         telemetry.update();
 
-        if (pipeline.position == SkystoneDeterminationPipeline.RingPosition.ONE) {
-            
+        if (pipeline.position == SkystoneDeterminationPipeline.RingPosition.NONE) {
+            telemetry.addData("Rings", "0");
+            telemetry.update();
+            // MOVE TO A (CLOSEST BOX)
+        } else if (pipeline.position == SkystoneDeterminationPipeline.RingPosition.ONE) {
+            telemetry.addData("Rings", "1");
+            telemetry.update();
+            // MOVE TO B (MIDDLE BOX)
+        } else if (pipeline.position == SkystoneDeterminationPipeline.RingPosition.FOUR) {
+            telemetry.addData("Rings", "4");
+            telemetry.update();
+            // MOVE TO C (FARTHEST BOX)
         }
     }
 
