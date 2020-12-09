@@ -35,14 +35,14 @@ public class OpenCVPain extends LinearOpMode
         // We set the viewport policy to optimized view so the preview doesn't appear 90 deg
         // out when the RC activity is in portrait. We do our actual image processing assuming
         // landscape orientation, though.
-        phoneCam.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW);
+        // phoneCam.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW);
 
         phoneCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
         {
             @Override
             public void onOpened()
             {
-                phoneCam.startStreaming(320,240, OpenCvCameraRotation.SIDEWAYS_LEFT);
+                phoneCam.startStreaming(320,240, OpenCvCameraRotation.UPRIGHT);
             }
         });
 
@@ -57,21 +57,23 @@ public class OpenCVPain extends LinearOpMode
 //            // Don't burn CPU cycles busy-looping in this sample
 //            sleep(50);
 //        }
-        telemetry.addData("Position", pipeline.position);
-        telemetry.update();
+        while (opModeIsActive()) {
+            // telemetry.addData("Position", pipeline.position);
+            // telemetry.update();
 
-        if (pipeline.position == SkystoneDeterminationPipeline.RingPosition.NONE) {
-            telemetry.addData("Rings", "0");
-            telemetry.update();
-            // MOVE TO A (CLOSEST BOX)
-        } else if (pipeline.position == SkystoneDeterminationPipeline.RingPosition.ONE) {
-            telemetry.addData("Rings", "1");
-            telemetry.update();
-            // MOVE TO B (MIDDLE BOX)
-        } else if (pipeline.position == SkystoneDeterminationPipeline.RingPosition.FOUR) {
-            telemetry.addData("Rings", "4");
-            telemetry.update();
-            // MOVE TO C (FARTHEST BOX)
+            if (pipeline.position == SkystoneDeterminationPipeline.RingPosition.NONE) {
+                telemetry.addData("Rings", "0");
+                telemetry.update();
+                // MOVE TO A (CLOSEST BOX)
+            } else if (pipeline.position == SkystoneDeterminationPipeline.RingPosition.ONE) {
+                telemetry.addData("Rings", "1");
+                telemetry.update();
+                // MOVE TO B (MIDDLE BOX)
+            } else if (pipeline.position == SkystoneDeterminationPipeline.RingPosition.FOUR) {
+                telemetry.addData("Rings", "4");
+                telemetry.update();
+                // MOVE TO C (FARTHEST BOX)
+            }
         }
     }
 
