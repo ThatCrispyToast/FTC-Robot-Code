@@ -84,7 +84,7 @@ public class Tank extends OpMode
         bottomLeftPower = -gamepad1.left_stick_y + -gamepad1.left_stick_x/2 + -gamepad1.right_stick_x/2;
         topLeftPower  = -gamepad1.left_stick_y + gamepad1.left_stick_x/2 + gamepad1.right_stick_x/2;
         bottomRightPower = -gamepad1.right_stick_y + gamepad1.left_stick_x/2 + gamepad1.right_stick_x/2;
-        topRightPower = -gamepad1.right_stick_y + -gamepad1.left_stick_x/2 + -gamepad1.right_stick_x/2        
+        topRightPower = -gamepad1.right_stick_y + -gamepad1.left_stick_x/2 + -gamepad1.right_stick_x/2;
         
         // Gamepad 1 Controls
         // Conveyor
