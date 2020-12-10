@@ -84,18 +84,7 @@ public class Tank extends OpMode
         bottomLeftPower = -gamepad1.left_stick_y + -gamepad1.left_stick_x/2 + -gamepad1.right_stick_x/2;
         topLeftPower  = -gamepad1.left_stick_y + gamepad1.left_stick_x/2 + gamepad1.right_stick_x/2;
         bottomRightPower = -gamepad1.right_stick_y + gamepad1.left_stick_x/2 + gamepad1.right_stick_x/2;
-        topRightPower = -gamepad1.right_stick_y + -gamepad1.left_stick_x/2 + -gamepad1.right_stick_x/2;
-        
-        // bottomLeftPower = -gamepad1.left_stick_y + gamepad1.right_trigger + -gamepad1.left_trigger;
-        // topLeftPower  = -gamepad1.left_stick_y + gamepad1.left_trigger + -gamepad1.right_trigger;
-        // bottomRightPower = -gamepad1.right_stick_y + gamepad1.left_trigger + -gamepad1.right_trigger;
-        // topRightPower = -gamepad1.right_stick_y + gamepad1.right_trigger + -gamepad1.left_trigger;
-        
-        // bottomLeftPower = -gamepad1.left_stick_y;
-        // topLeftPower  = -gamepad1.left_stick_y;
-        // bottomRightPower = -gamepad1.right_stick_y;
-        // topRightPower = -gamepad1.right_stick_y;
-        
+        topRightPower = -gamepad1.right_stick_y + -gamepad1.left_stick_x/2 + -gamepad1.right_stick_x/2        
         
         // Gamepad 1 Controls
         // Conveyor
@@ -119,25 +108,25 @@ public class Tank extends OpMode
             rightIntakePower = 0.0;
         }
         
-        // Intake Servos
-        if (gamepad1.dpad_up) {
-            leftIntakeServo.setPosition(1.0);
-            rightIntakeServo.setPosition(0.0);
-            
-        } else if (gamepad1.dpad_down) {
-            leftIntakeServo.setPosition(0.0);
-            rightIntakeServo.setPosition(1.0);
-        }
         
         // Gamepad 2 Controls
-        
+        // Shooter
         if (gamepad2.left_bumper) {
             Shooter.setPower(-1.0);
         } else if (gamepad2.right_bumper) {
             Shooter.setPower(1.0);
         } else {
             Shooter.setPower(0);
+        }
+
+        // Intake Servos
+        if (gamepad2.dpad_up) {
+            leftIntakeServo.setPosition(1.0);
+            rightIntakeServo.setPosition(0.0);
             
+        } else if (gamepad2.dpad_down) {
+            leftIntakeServo.setPosition(0.0);
+            rightIntakeServo.setPosition(1.0);
         }
 
         // Caps Powers at 1.0 or -1.0 (There's gotta be a better way to do this cause looking at this block of single-line if statements makes me want to vomit)

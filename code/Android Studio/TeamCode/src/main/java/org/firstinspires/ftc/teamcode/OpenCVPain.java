@@ -20,7 +20,7 @@ import org.openftc.easyopencv.OpenCvWebcam;
 @TeleOp(name="OpenCVPain")
 public class OpenCVPain extends LinearOpMode
 {
-    OpenCvWebcam phoneCam;
+    OpenCvWebcam webcam;
     SkystoneDeterminationPipeline pipeline;
 
     @Override
@@ -28,23 +28,21 @@ public class OpenCVPain extends LinearOpMode
     {
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        phoneCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         pipeline = new SkystoneDeterminationPipeline();
-        phoneCam.setPipeline(pipeline);
+        webcam.setPipeline(pipeline);
 
-        // We set the viewport policy to optimized view so the preview doesn't appear 90 deg
-        // out when the RC activity is in portrait. We do our actual image processing assuming
-        // landscape orientation, though.
-        // phoneCam.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW);
-
-        phoneCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
+        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
         {
             @Override
             public void onOpened()
             {
-                phoneCam.startStreaming(320,240, OpenCvCameraRotation.UPRIGHT);
+                webcam.startStreaming(320,240, OpenCvCameraRotation.UPRIGHT);
             }
         });
+
+        telemetry.addData("Status", "Initialized");
+        telemetry.addData("IMPORTANT", "Robot MUST be placed on LEFT start line.");
 
         waitForStart();
 
@@ -92,8 +90,9 @@ public class OpenCVPain extends LinearOpMode
         /*
          * Some color constants
          */
-        static final Scalar BLUE = new Scalar(0, 0, 255);
+        static final Scalar RED = new Scalar(255, 0, 0);
         static final Scalar GREEN = new Scalar(0, 255, 0);
+        static final Scalar BLUE = new Scalar(0, 0, 255);
 
         /*
          * The core values which define the location and size of the sample regions
@@ -153,7 +152,7 @@ public class OpenCVPain extends LinearOpMode
                     input, // Buffer to draw on
                     region1_pointA, // First point which defines the rectangle
                     region1_pointB, // Second point which defines the rectangle
-                    BLUE, // The color the rectangle is drawn in
+                    RED, // The color the rectangle is drawn in
                     2); // Thickness of the rectangle lines
 
             position = RingPosition.FOUR; // Record our analysis
