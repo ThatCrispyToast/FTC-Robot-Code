@@ -11,8 +11,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class Tank extends OpMode
 {
     // Declare OpMode members.
-    float conveyorSpeed = 50.0;
-
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor topLeftDrive = null;
     private DcMotor topRightDrive = null;
@@ -24,7 +22,6 @@ public class Tank extends OpMode
     private DcMotor Shooter = null;
     private Servo leftIntakeServo = null;
     private Servo rightIntakeServo = null;
-    // static final double HDHEX_ULTRAPLANETARY_TICK_COUNT = 28 / 2.89;
 
     // Code to run ONCE when the driver hits INIT
     @Override
@@ -74,10 +71,6 @@ public class Tank extends OpMode
         double topRightPower;
         double bottomLeftPower;
         double bottomRightPower;
-        double conveyorPower;
-        double leftIntakePower;
-        double rightIntakePower;
-        double shooterPower;
         
         // Gamepad 1 Controls
         // Drivetrain (Tank w/ Strafing)
@@ -87,25 +80,26 @@ public class Tank extends OpMode
         topRightPower = -gamepad1.right_stick_y + -gamepad1.left_stick_x/2 + -gamepad1.right_stick_x/2;
         
         // Gamepad 1 Controls
-        // Conveyor
-        if (gamepad1.y) {
-            conveyorPower = conveyorSpeed / 100;
-        } else if (gamepad1.a) {
-            conveyorPower = -conveyorSpeed / 100;
-        } else {
-            conveyorPower = 0.0;
+        // Intake Servos
+        if (gamepad1.dpad_up) {
+            leftIntakeServo.setPosition(1.0);
+            rightIntakeServo.setPosition(0.0);
+            
+        } else if (gamepad1.dpad_down) {
+            leftIntakeServo.setPosition(0.0);
+            rightIntakeServo.setPosition(1.0);
         }
         
         // Intake
         if (gamepad1.left_bumper) {
-            leftIntakePower = 1.0;
-            rightIntakePower = -1.0;
+            leftIntake.setPower(1.0);
+            rightIntake.setPower(-1.0);
         } else if (gamepad1.right_bumper) {
-            leftIntakePower = -1.0;
-            rightIntakePower = 1.0;
+            leftIntake.setPower(-1.0);
+            rightIntake.setPower(1.0);
         } else {
-            leftIntakePower = 0.0;
-            rightIntakePower = 0.0;
+            leftIntake.setPower(0.0);
+            rightIntake.setPower(0.0);
         }
         
         
@@ -119,14 +113,13 @@ public class Tank extends OpMode
             Shooter.setPower(0);
         }
 
-        // Intake Servos
-        if (gamepad2.dpad_up) {
-            leftIntakeServo.setPosition(1.0);
-            rightIntakeServo.setPosition(0.0);
-            
-        } else if (gamepad2.dpad_down) {
-            leftIntakeServo.setPosition(0.0);
-            rightIntakeServo.setPosition(1.0);
+        // Conveyor
+        if (gamepad2.y) {
+            conveyor.setPower(0.5);
+        } else if (gamepad2.a) {
+            conveyor.setPower(-0.5);
+        } else {
+            conveyor.setPower(0.0);
         }
 
         // Caps Powers at 1.0 or -1.0 (There's gotta be a better way to do this cause looking at this block of single-line if statements makes me want to vomit)
@@ -144,10 +137,6 @@ public class Tank extends OpMode
         topRightDrive.setPower(topRightPower);
         bottomLeftDrive.setPower(bottomLeftPower);
         bottomRightDrive.setPower(bottomRightPower);
-        conveyor.setPower(conveyorPower);
-        leftIntake.setPower(leftIntakePower);
-        rightIntake.setPower(rightIntakePower);
-        
 
         // Show the elapsed game time, wheel powers, and control award shit that ill add later
         telemetry.addData("Status", "Running, Run Time: " + runtime.toString());
