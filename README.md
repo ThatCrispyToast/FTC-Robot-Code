@@ -2,8 +2,7 @@
 
 <h1 align="center">Robot Code</h1>
 
-<b><p align="center">Its the code for the robot.</p></b>
-<p align="center"><sup><sub>whatd you expect</sub></sup></p>
+<b><p align="center">Where dreams come true!</b>*<b></p></b>
 
 ### Repo Contains:
 - Robot Code
@@ -15,4 +14,5 @@
 - [ ] Add Documentation
 - [ ] Create Guides
 
+<sup><sub>*Objectively False</sub></sup>
 > Codes a bit of a mess rn, but its just like my personality: somewhere between 'soft and organized' and 'trying to drown children,' so if you insult the code youre insulting me and i will be very sad -Aniket
