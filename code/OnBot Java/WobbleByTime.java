@@ -47,7 +47,7 @@ public class WobbleByTime extends LinearOpMode {
         // runtime.reset();
 
         // Run
-        // Sleep for a minute to add half a second of stress for everyone on the team
+        // Sleeps for Half a Second to Account for Implicit Momentum due to Robot Placement
         sleep(500);
         
         topLeftDrive.setPower(1);

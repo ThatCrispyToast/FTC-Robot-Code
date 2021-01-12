@@ -7,11 +7,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@TeleOp(name="Tank")
+@TeleOp(name="Tank w/ Strafing")
 public class Tank extends OpMode
 {
     // Declare OpMode members.
-
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor topLeftDrive = null;
     private DcMotor topRightDrive = null;
@@ -23,13 +22,12 @@ public class Tank extends OpMode
     private DcMotor Shooter = null;
     private Servo leftIntakeServo = null;
     private Servo rightIntakeServo = null;
-    // static final double HDHEX_ULTRAPLANETARY_TICK_COUNT = 28 / 2.89;
 
     // Code to run ONCE when the driver hits INIT
     @Override
     public void init() {
 
-        // Initialize the hardware variables.
+        // Initialize the Hardware Variables.
         topLeftDrive  = hardwareMap.get(DcMotor.class, "front_left_motor");
         topRightDrive = hardwareMap.get(DcMotor.class, "front_right_motor");
         bottomLeftDrive  = hardwareMap.get(DcMotor.class, "back_left_motor");
@@ -41,20 +39,18 @@ public class Tank extends OpMode
         rightIntakeServo  = hardwareMap.get(Servo.class, "right_intake");
         Shooter = hardwareMap.get(DcMotor.class, "shooter");
 
-        // Reverse the motors that face towards the back of the robot
+        // Reverse the Motors that Face Towards the Back of the Robot
         topLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         bottomLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         topRightDrive.setDirection(DcMotor.Direction.FORWARD);
         bottomRightDrive.setDirection(DcMotor.Direction.FORWARD);
         
-        // Run Appropriate Motors w/ Encoders
-
-        // Tell the driver that initialization is complete.
+        // Tell the Driver that Initialization is Complete.
         telemetry.addData("Status", "Initialized");
         telemetry.update();
     }
 
-    // Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
+    // ! Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY (Currently Unused)
     @Override
     public void init_loop() {
     }
@@ -62,6 +58,7 @@ public class Tank extends OpMode
     // Code to run ONCE when the driver hits PLAY
     @Override
     public void start() {
+        // Resets runtime Variable to 0
         runtime.reset();
     }
 
@@ -80,29 +77,36 @@ public class Tank extends OpMode
         
         // Gamepad 1 Controls
         // Drivetrain (Tank w/ Strafing)
+        // Each Power is a Combination of the Y Value of it's Respective Stick and the Halved and Combined X Vales of the Two Sticks for Strafing
+        // i.e wheelPower = -respectiveStick_y + left_stick_x/2 + right_stick_x/2;
         bottomLeftPower = -gamepad1.left_stick_y + -gamepad1.left_stick_x/2 + -gamepad1.right_stick_x/2;
         topLeftPower  = -gamepad1.left_stick_y + gamepad1.left_stick_x/2 + gamepad1.right_stick_x/2;
         bottomRightPower = -gamepad1.right_stick_y + gamepad1.left_stick_x/2 + gamepad1.right_stick_x/2;
         topRightPower = -gamepad1.right_stick_y + -gamepad1.left_stick_x/2 + -gamepad1.right_stick_x/2;
         
-        // Gamepad 1 Controls
-        // Conveyor
+        // Conveyor Controls
         if (gamepad1.y) {
+            // Moves Conveyor Backwards
             conveyorPower = 1;
         } else if (gamepad1.a) {
+            // Moves Conveyor Forwards
             conveyorPower = -1;
         } else {
+            // Stops Conveyor from Moving if Buttons Aren't Pressed
             conveyorPower = 0.0;
         }
         
-        // Intake
+        // Intake Controls
         if (gamepad1.left_bumper) {
+            // Move Intake Inwards
             leftIntakePower = 1.0;
             rightIntakePower = -1.0;
         } else if (gamepad1.right_bumper) {
+            // Move Intake Outwards
             leftIntakePower = -1.0;
             rightIntakePower = 1.0;
         } else {
+            // Stops Intake from Moving if Buttons Aren't Pressed
             leftIntakePower = 0.0;
             rightIntakePower = 0.0;
         }
@@ -111,24 +115,29 @@ public class Tank extends OpMode
         // Gamepad 2 Controls
         // Shooter
         if (gamepad2.left_bumper) {
+            // Move Shooter Inwards
             Shooter.setPower(-1.0);
         } else if (gamepad2.right_bumper) {
+            // Move Shooter Outwards
             Shooter.setPower(1.0);
         } else {
+            // Stops Shooter from Moving if Buttons Aren't Pressed
             Shooter.setPower(0);
         }
 
         // Intake Servos
         if (gamepad2.dpad_up) {
+            // Moves Intake Servos Upwards
             leftIntakeServo.setPosition(1.0);
             rightIntakeServo.setPosition(0.0);
             
         } else if (gamepad2.dpad_down) {
+            // Moves Intake Servos Downwards
             leftIntakeServo.setPosition(0.0);
             rightIntakeServo.setPosition(1.0);
         }
 
-        // Caps Powers at 1.0 or -1.0 (There's gotta be a better way to do this cause looking at this block of single-line if statements makes me want to vomit)
+        // Limits Wheel Powers to a Range of 1.0 to -1.0
         if (topLeftPower > 1.0) topLeftPower = 1.0;
         if (topLeftPower < -1.0) topLeftPower = -1.0;
         if (bottomRightPower > 1.0) bottomRightPower = 1.0;
@@ -148,9 +157,9 @@ public class Tank extends OpMode
         rightIntake.setPower(rightIntakePower);
         
 
-        // Show the elapsed game time, wheel powers, and control award shit that ill add later
+        // Show the Elapsed Game Time, Wheel Powers, and Robot Status via Driver Station Telemetry
         telemetry.addData("Status", "Running, Run Time: " + runtime.toString());
-        telemetry.addData("Motors", "top left (%.2f) top right (%.2f)\nbottom left (%.2f) bottom right (%.2f)", topLeftPower, topRightPower, bottomLeftPower, bottomRightPower);
+        telemetry.addData("Motors", "Top Left (%.2f) Top Right (%.2f)\nBottom Left (%.2f) Bottom Right (%.2f)", topLeftPower, topRightPower, bottomLeftPower, bottomRightPower);
         telemetry.addData("Status", "Running...");
         telemetry.update();
     }
@@ -158,6 +167,7 @@ public class Tank extends OpMode
     // Code to run ONCE after the driver hits STOP
     @Override
     public void stop() {
+        // Updates Robot Status
         telemetry.addData("Status", "Stopped");
         telemetry.update();
     }

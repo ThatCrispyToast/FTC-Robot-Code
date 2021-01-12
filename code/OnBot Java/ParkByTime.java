@@ -17,12 +17,12 @@ public class ParkByTime extends LinearOpMode {
     private DcMotor bottomLeftDrive = null;
     private DcMotor bottomRightDrive = null;
 
-    static final int MOTOR_TICK_COUNT = 1120;
-    static final int GEAR_RATIO = 80 / 40;
-    static final double CIRCUMFERENCE = 12.1208661;
+    // static final int MOTOR_TICK_COUNT = 1120;
+    // static final int GEAR_RATIO = 80 / 40;
+    // static final double CIRCUMFERENCE = 12.1208661;
 
-    static final int TICKS_PER_WHEEL_ROTATION = (int) (MOTOR_TICK_COUNT / GEAR_RATIO);
-    // static final double AVG_MARGIN_OF_ERROR = null;
+    // static final int TICKS_PER_WHEEL_ROTATION = (int) (MOTOR_TICK_COUNT / GEAR_RATIO);
+    // // static final double AVG_MARGIN_OF_ERROR = null;
 
     @Override
     public void runOpMode() {
@@ -44,20 +44,17 @@ public class ParkByTime extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        // runtime.reset();
 
         // Run
-        // Sleep for a minute to add half a second of stress for everyone on the team
+        // Sleeps for Half a Second to Account for Implicit Momentum due to Robot Placement
         sleep(500);
-        
+        // Moves Robot Forward by Powering All Wheels Positively for 900ms 
         topLeftDrive.setPower(1);
         topRightDrive.setPower(1);
         bottomLeftDrive.setPower(1);
         bottomRightDrive.setPower(1);
-        
         sleep(900);
-        
-
+        // Stops Robot
         topLeftDrive.setPower(0);
         topRightDrive.setPower(0);
         bottomLeftDrive.setPower(0);
